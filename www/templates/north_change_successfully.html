@@ -1,0 +1,35 @@
+{% extends '__base__.html' %}
+{% block title %}IT Weekly Working Plan{% endblock %}
+{% block beforehead %}
+{% endblock %}
+{% block nav %}
+<li><a href="/plan"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+<li><a href="/plan/south">South</a></li>
+<li class="active"><a href="/plan/north">North</a></li>
+{% endblock %}
+{% block content %}
+	<div class="row">
+                <div class="col-sm-8">
+                <div class="panel panel-success">
+		<div class="panel-heading">
+                        <h3 class="panel-title"><b>Edit Plan</b></h3>
+                </div><!-- /.panel-heading -->
+                <div class="panel-body">
+			<form id="form-change-successfully" v-on="submit: submit" class="form-horizontal">
+				<div class="alert alert-info alert-dismissible fade in">
+					<p><span class="glyphicon glyphicon-ok-sign"></span> The plan was changed successfully.</p>
+                                </div>
+				<div class="form-group">
+                                        <label class="col-sm-3 control-label"></label>
+                                        <div class="col-sm-2">
+						<a class="btn btn-sm btn-success" href="/plan/north"><span class="glyphicon glyphicon-cog"></span><strong> Ok</strong></a>
+                                         </div>
+                                         <div class="col-sm-2">
+                                         </div>
+                                </div>
+			</form>
+		</div>
+                </div>
+                </div>
+        </div>
+{% endblock %}
