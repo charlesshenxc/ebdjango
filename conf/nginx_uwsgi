@@ -1,0 +1,24 @@
+sudo pip install uwsgi
+
+sudo mkdir /etc/uwsgi
+sudo mkdir /var/log/uwsgi
+
+vim /etc/uwsgi/plans.ini
+
+
+vim /etc/init/uwsgi-emperor.conf
+
+
+sudo start uwsgi-emperor
+sudo restart uwsgi-emperor
+sudo stop uwsgi-emperor
+
+sudo apt-get -y install nginx-full
+
+sudo vim /etc/nginx/sites-available/plans
+
+
+ln -s /etc/nginx/sites-available/plans /etc/nginx/sites-enabled/plans
+rm /etc/nginx/sites-enabled/default
+sudo /etc/init.d/nginx restart
+sudo vim /var/log/nginx/error.log
