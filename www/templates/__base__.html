@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+{% block meta %}<!-- block meta -->{% endblock %}
+<title>{% block title %} {% endblock %}</title>
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="/static/bootstrap-3.2.0-dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="/static/css/sticky-footer.css">
+<link rel="stylesheet" href="/static/css/uikit.min.css">
+<link rel="stylesheet" href="/static/css/uikit.gradient.min.css">
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
+<script src="/static/js/md5.js"></script>
+<script src="/static/js/vue.min.js"></script>
+<script src="/static/js/itplan.js"></script>
+{% block beforehead %}<!-- before head -->{% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/plan">IT Weekly Working Plan</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+	  {% block nav %}
+            <li class="active"><a href="/plan"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+            <li><a href="/plan/south">South</a></li>
+            <li><a href="/plan/north">North</a></li>
+	  {% endblock %}<!-- // nav -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign out <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/signout"><span class="glyphicon glyphicon-log-out"></span> Sign out</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+	  {% block navright %}
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+	  {% endblock %}<!-- // nav-right -->
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+</nav>
+<div class="container">
+<!-- content -->
+{% block content %}
+{% endblock %}
+<!-- // content -->
+</div>
+<div class="footer">
+      <div class="container">
+	<p class="text-muted" align="center"><span class="glyphicon glyphicon-tree-conifer"></span> CN FC IT</p>
+      </div>
+</div>
+</body>
+</html>

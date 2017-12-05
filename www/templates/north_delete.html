@@ -1,0 +1,80 @@
+{% extends '__base__.html' %}
+{% block title %}IT Weekly Working Plan{% endblock %}
+{% block beforehead %}
+<script>
+var
+    action = '{{ action }}',
+    redirect = '{{ redirect }}';
+
+function initVue(north) {
+    var vm = new Vue({
+        el: '#form-north-delete',
+        data: north,
+        methods: {
+	    submit: function (event) {
+		event.preventDefault();
+                startLoading();
+                postApi(action, {}, function (err, r) {
+                    if (err) {
+                        return showError(err);
+                    }
+		    else {
+                        return location.assign(redirect);
+                    }
+		    stopLoading();
+                });
+            }
+        }
+    });
+};
+
+$(function () {
+    getApi('/api/north/edit/{{ id }}', function (err, north) {
+	if (err) {
+	    showError(err);
+	}
+	else {
+	    initVue(north);
+	}
+    });
+});
+
+</script>
+
+{% endblock %}
+{% block nav %}
+<li><a href="/plan"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+<li><a href="/plan/south">South</a></li>
+<li class="active"><a href="/plan/north">North</a></li>
+{% endblock %}
+{% block content %}
+	<div class="row">
+                <div class="col-sm-8">
+                <div class="panel panel-success">
+		<div class="panel-heading">
+                        <h3 class="panel-title"><b>Delete Plan</b></h3>
+                </div><!-- /.panel-heading -->
+                <div class="panel-body">
+			<form id="form-north-delete" v-on="submit: submit" class="form-horizontal">
+				<div class="alert alert-danger alert-dismissible fade in">
+					<p>Are you sure you want to delete this?</p>
+					<p>" {{ item }} "</p>
+                                </div>
+				<div class="form-group">
+                                        <label class="col-sm-3 control-label"></label>
+                                        <div class="col-sm-2">
+                                                <button type="submit" class="btn btn-sm btn-warning">
+                                                	<span class="glyphicon glyphicon-warning-sign"></span>
+                                                	<strong>Yes, I'm sure</strong>
+                                                </button>
+                                         </div>
+                                         <div class="col-sm-2">
+                                         	<a class="btn btn-sm btn-success" href="/plan/north"><span class="glyphicon glyphicon-share-alt"></span><strong> No</strong></a>
+                                         </div>
+                                </div>
+			</form>
+		</div>
+                </div>
+                </div>
+        </div>
+{% endblock %}
