@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li>Create Question</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p><h4 class="text-center">{{ survey.title }}</h4></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default"><div class="panel-body">
+                <form id="frm_survey" class="form-horizontal" action="{% url 'create_question' survey.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">
+                            Question Number:
+                        </label>
+                        <div class="col-md-1">
+                            <input type="number" class="form-control" name="question_number" value="{{ question_number }}" readonly >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">
+                            Question Title:
+                        </label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="question_title" autocomplete="off" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">
+                            Question Type:
+                        </label>
+                        <div class="col-md-2">
+                            <select id="question_type" class="form-control" name="question_type">
+                                <option value="radio" selected>Radio</option>
+                                <option value="checkbox">Checkbox</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">
+                            Choice
+                        </label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="choice_title" autocomplete="off" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">
+                            Choice
+                        </label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="choice_title" autocomplete="off" required>
+                        </div>
+                        <label class="col-md-1 control-label">
+                            <a href="#" id="add_choice"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+                        </label>
+                    </div>
+                    <div id="choice_wrapper">
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary" id="submit">Save and continue adding</button>
+                        </div>
+                    </div>
+                </form>
+            </div></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default"><div class="panel-body">
+            {% if survey.question_set.all %}
+                {% for question in survey.question_set.all %}
+                     <p><h5 class="text-left">{{ question.number }}. {{ question.title }}</h5></p>
+                {% endfor %}
+                <p class="text-center"><a class="btn btn-warning" id="complete_survey" href="/survey/{{ survey.id }}">Complete Survey</a></p>
+            {% else %}
+                <p><h5 class="text-left">Please add some questions to this survey!</h5></p>
+            {% endif %}
+            </div></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block specificjs %}
+<script>
+$(document).ready(function(){
+    var max_choice = 10;
+    var choice_number = 3;
+    $("#add_choice").on('click', function() {
+        if(choice_number <= max_choice) {
+            choice_number++;
+            var choice_html = '<div class="form-group">';
+            choice_html += '<label class="col-md-2 control-label">Choice</label>' +
+                '<div class="col-md-6">' +
+                '<input type="text" class="form-control" name="choice_title" autocomplete="off" required>' +
+                '</div>' +
+                '<label class="col-md-1 control-label">' +
+                '<a href="#" class="removeclass"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>' +
+                '</label>' +
+                '</div>';
+            $("#choice_wrapper").append(choice_html);
+        }
+        return false;
+    });
+
+    $("#choice_wrapper").on("click", ".removeclass", function(){
+        if(choice_number > 3) {
+            $(this).parent().parent().remove();
+            choice_number--;
+        }
+        return false;
+    });
+
+    $("#complete_survey").on("click", function(){
+        var message = 'You have added ';
+        message += {{ survey.question_set.all.count }} +
+            ' questions to this survey.\n' +
+            'Are you sure you want to complete this survey?';
+        if(confirm(message)) {
+            $.LoadingOverlay("show");
+        } else {
+            return false;
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li>Create Survey</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+                <form id="frm_survey" class="form-horizontal" action="{% url 'create_survey' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div>
+                            <label class="col-md-2 control-label">
+                                Survey Name:
+                            </label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="survey_title" autocomplete="off" required="required">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>
+                            <label class="col-md-2 control-label">
+                                Survey Description:
+                            </label>
+                            <div class="col-md-6">
+                                    <textarea class="form-control" name="survey_description" rows="3" required="required"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary" id="submit">Next</button>
+                        </div>
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
