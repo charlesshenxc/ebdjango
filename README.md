@@ -18,6 +18,11 @@ $ mkdir app && cd app
 $ git clone https://github.com/xshen1898/SimpleSurvey.git
 $ cd SimpleSurvey/docker
 $ docker-compose up -d
+
+$ docker exec -it mysql /bin/bash
+$ mysql -u root -p
+$ mysql> create database simplesurvey;
+
 $ docker exec -it simplesurvey /bin/bash
 $ python manage.py migrate
 $ python manage.py createsuperuser
