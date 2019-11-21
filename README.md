@@ -4,8 +4,9 @@
 ### Environment
 
 - Python3
-- Django
+- django
 - gunicorn
+- mysqlclient
 - MySQL 
 - Nginx
 
